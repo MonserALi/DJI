@@ -25,7 +25,7 @@ const float TICKS_PER_WHEEL_REV = TICKS_PER_MOTOR_REV * GEAR_RATIO;
 float Kp = 0.f;      // Reduced from 0.89 - less aggressive
 float Ki = 0.001f;    // Reduced from 0.01 - less integral windup
 float Kd = 0.05f;     // Reduced from 0.08 - less derivative action
-const int16_t MAX_RPM = 1500;
+const int16_t MAX_RPM = 700;
 const float INTEGRAL_LIMIT = 5e5f;
 const int32_t POSITION_DEADBAND = 130;  // Larger deadband to stop oscillation (was 30)
 
@@ -430,8 +430,8 @@ void loop() {
   if (PS4.isConnected()) {
     xData = PS4.RStickX();
     yData = PS4.RStickY();
-    X = map(xData, -128, 127, -1500, 1500);
-    Y = map(yData, -128, 127, -1500, 1500);
+    X = map(xData, -128, 127, -MAX_RPM, MAX_RPM);
+    Y = map(yData, -128, 127, -MAX_RPM, MAX_RPM);
     
     // Auto-switch modes based on joystick position
     int deadzone = 50;  // Increased deadzone for mode switching (was 20)
